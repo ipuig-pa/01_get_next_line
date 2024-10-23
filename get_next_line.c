@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:04:00 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/22 13:24:42 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:59:31 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ char	*line_in_leftover(char *leftover, size_t line_len)
 	if (!leftover)
 		return (NULL);
 	strlcpy(leftover, temp, bytes_read + leftover_len + 1);
-	//manage new leftover
 	return(line);
 }
 
