@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:04:00 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/22 14:59:31 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:56:37 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,30 +55,26 @@ size_t	newline_len(char *str);
 	return(i);
 }
 
-char	*line_in_leftover(char *leftover, size_t line_len)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	char	*line;
-	char	*temp;
+	size_t	i;
+	size_t	dst_len;
+	size_t	src_len;
 
-	line = (char *)malloc(newline_len + 1);
-	if (!line)
-		return (NULL);
-	strlcpy(line, leftover, line_len + 1);
-	temp = (char*)malloc(leftover_len - line_len + 1);
-	if (!temp)
-		return (NULL);
-	strlcpy(temp, leftover, el que queda despres de n);
-	free(leftover);
-	leftover = (char*)malloc(leftover_len - line_len + 1);
-	if (!leftover)
-		return (NULL);
-	strlcpy(leftover, temp, bytes_read + leftover_len + 1);
-	return(line);
-}
-
-keep_reading()
-{
-	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	i = 0;
+	dst_len = ft_strlen(dst);
+	src_len = ft_strlen(src);
+	if (dstsize == 0)
+		return (src_len);
+	if (dstsize <= dst_len)
+		return (src_len + dstsize);
+	while (i < dstsize - dst_len - 1 && src[i] != '\0')
+	{
+		dst[i + dst_len] = src[i];
+		i++;
+	}
+	dst[i + dst_len] = '\0';
+	return (dst_len + ft_strlen(src));
 }
 
 char	*get_next_line(int fd)
@@ -90,37 +86,27 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	leftover_len = str_len(leftover);
 	if (leftover)
 	{
 		line_len = newline_len(leftover);
-		leftover_len = strlen(leftover);
 		if (line_len <= leftover_len)
 		{
-			line = (char *)malloc(newline_len + 1);
+			line = (char *)malloc(line_len + 1);
 			if (!line)
 				return (NULL);
 			strlcpy(line, leftover, line_len + 1);
-			
-			//manage new leftover
+			temp = (char*)malloc(leftover_len - line_len + 1);
+			if (!temp)
+				return (NULL);
+			strlcpy(temp, (leftover + line_len), (leftover_len - line_len));
+			free(leftover);
+			leftover = (char*)malloc(leftover_len - line_len + 1);
+			if (!leftover)
+				return (NULL);
+			strlcpy(leftover, temp, leftover_len -line_len + 1);
+			free(temp);
 			return(line);
-		}
-		else
-		{
-			bytes_read = read(fd, buffer, BUFFER_SIZE);
-			if (bytes_read > 0)
-			{
-				temp = (char*)malloc(bytes_read + leftover_len + 1);
-				if (!temp)
-					return (NULL);
-				strlcpy(temp, buffer, bytes_read + 1);
-				strlcat(temp, leftover);
-				free(leftover);
-				leftover = (char*)malloc(bytes_read + leftover_len + 1);
-				if (!leftover)
-					return (NULL);
-				strlcpy(leftover, temp, bytes_read + leftover_len + 1);
-				return (get_next_line(fd));
-			}
 		}
 	}
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
@@ -131,77 +117,13 @@ char	*get_next_line(int fd)
 			return (NULL);
 		strlcpy(temp, buffer, bytes_read + 1);
 		strlcat(temp, leftover);
-		free(leftover);
+		if (leftover)
+			free(leftover);
 		leftover = (char*)malloc(bytes_read + leftover_len + 1);
 		if (!leftover)
 			return (NULL);
 		strlcpy(leftover, temp, bytes_read + leftover_len + 1);
+		free(temp);
 		return (get_next_line(fd));
 	}
-}
-				
-
-
-
-
-
-
-				i = 0;
-				while (i <= bytes_read && buffer[i] != '\n')
-					i++;
-				if (buffer[i] == '\n')
-				{
-					if (leftover)
-						return ((char *)malloc(ft_strlen(leftover) + i));
-					free(leftover);
-					leftover = NULL;
-				}
-			}
-	
-	
-	
-	bytes_read = read(fd, buffer, BUFFER_SIZE);
-	while (bytes_read > 0)
-	{
-		i = 0;
-		while (i <= bytes_read && buffer[i] != '\n')
-			i++;
-		if (buffer[i] == '\n')
-		{
-			if (leftover)
-				return ((char *)malloc(ft_strlen(leftover) + i));
-			free(leftover);
-			leftover = NULL;
-		}
-		else
-			if (leftover)
-			{
-				leftover_cpy = str_copy(leftover_cpy, leftover);
-				free(leftover);
-				leftover =(static char *)malloc(BUFFER_SIZE + leftover_len);
-				if (!leftover)
-					return (NULL);
-				str_copy(leftover, leftover_cpy);
-				strlcat(leftover, buffer, BUFFER_SIZE);
-			}
-			else
-			{
-				leftover =(static char *)malloc(BUFFER_SIZE);
-				if (!leftover)
-					return (NULL);
-				i = 0;
-				while (i <= BUFFER_SIZE)
-				{
-					leftover[i] = buffer[i];
-					i++;
-				}
-			}
-			bytes_read = read(fd, buffer, BUFFER_SIZE);
-	}
-	if (bytes_read == -1)
-	{
-		free(line);
-		return (NULL);
-	}
-	return (line);
 }
