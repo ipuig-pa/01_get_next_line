@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:04:00 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/23 16:55:31 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/24 10:48:26 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char	*get_next_line(int fd)
 	if (bytes_read == 0 && leftover && *leftover)
 	{
 		line = line_from_leftover(leftover, ft_strlen(leftover));
-		free (leftover)
+		free (leftover);
 		leftover = NULL;
 		return (line);
 	}
