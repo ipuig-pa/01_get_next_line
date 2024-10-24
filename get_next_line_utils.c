@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:05:38 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/23 16:44:58 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:16:29 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,7 @@ size_t	newline_len(char *str)
 	size_t	i;
 
 	i = 0;
-	if (!str)
-		return (i);
 	while (str[i] != '\n' && str[i] != '\0')
-		i++;
-	if (str[i] == '\n')
 		i++;
 	return (i);
 }
