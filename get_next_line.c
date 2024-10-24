@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:04:00 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/24 18:16:13 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/24 18:18:42 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ char	*free_leftover(char *leftover)
 }
 
 /*#include <fcntl.h>
+#include <stdio.h>
 
 int	main(void)
 {
