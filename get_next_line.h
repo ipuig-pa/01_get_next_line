@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:05:54 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/24 18:18:14 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/24 18:48:12 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 # include <unistd.h>
 # include <stddef.h>
 # include <stdlib.h>
-//# define BUFFER_SIZE 1024
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 9999
+# endif
+
 size_t	len(char *str);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	newline(char *str);

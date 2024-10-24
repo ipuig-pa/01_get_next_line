@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:04:00 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/24 18:18:42 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/24 18:48:10 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,18 @@ int	main(void)
 	char	*line;
 
 	fd = open("prova.txt", 0);
+ 	line = get_next_line(fd);
+	printf("%s", line);
 	while ((line = get_next_line(fd)))
 	{
-		printf("LINE_READ: %s\n", line);
+		printf("LINE_READ: %s", line);
 		free(line);
 	}
+	 printf("from standard input:");
+	while ((line = get_next_line(0)))
+	{
+		printf("LINE_READ: %s", line);
+		free(line);
+	} 
 	return (0);
 }*/
