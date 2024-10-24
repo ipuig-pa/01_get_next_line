@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:05:38 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/24 12:16:29 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/24 16:47:42 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,3 +76,20 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	dst[i + dst_len] = '\0';
 	return (dst_len + ft_strlen((char *)src));
 }
+
+int	ft_strchr(const char *s, int c)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == (unsigned char)c)
+			return (1);
+		i++;
+	}
+	if (s[i] == (unsigned char)c)
+		return (1);
+	return (0);
+}
+
