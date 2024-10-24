@@ -6,13 +6,13 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:05:38 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/24 16:47:42 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/24 18:16:56 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char *str)
+size_t	len(char *str)
 {
 	size_t	len;
 
@@ -40,10 +40,10 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 		}
 		dst[i] = '\0';
 	}
-	return (ft_strlen((char *)src));
+	return (len((char *)src));
 }
 
-size_t	newline_len(char *str)
+size_t	newline(char *str)
 {
 	size_t	i;
 
@@ -62,8 +62,8 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	i = 0;
 	if (!dst || !src)
 		return (0);
-	dst_len = ft_strlen(dst);
-	src_len = ft_strlen((char *)src);
+	dst_len = len(dst);
+	src_len = len((char *)src);
 	if (dstsize == 0)
 		return (src_len);
 	if (dstsize <= dst_len)
@@ -74,7 +74,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 		i++;
 	}
 	dst[i + dst_len] = '\0';
-	return (dst_len + ft_strlen((char *)src));
+	return (dst_len + len((char *)src));
 }
 
 int	ft_strchr(const char *s, int c)
@@ -92,4 +92,3 @@ int	ft_strchr(const char *s, int c)
 		return (1);
 	return (0);
 }
-
