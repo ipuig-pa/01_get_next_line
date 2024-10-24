@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:04:00 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/24 15:40:12 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/24 16:04:58 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,12 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		if(leftover)
+			free(leftover);
+		leftover = NULL;
 		return (NULL);
+	}
 	if (leftover)
 	{
 		//printf("there was leftover\n");
@@ -101,12 +106,9 @@ char	*get_next_line(int fd)
 		}
 	}
 	//printf("No leftover\n");
-	while (1)
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	while (bytes_read > 0)
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		//printf("bytes_read: %zu\n", bytes_read);
-		if (bytes_read <= 0)
-			break ;
 		buffer[bytes_read] = '\0';
 		//printf("buffer: %s\n", buffer);
 		leftover = add_chunk(leftover, buffer, bytes_read);
@@ -124,6 +126,7 @@ char	*get_next_line(int fd)
 			//printf("newleftover: %s\n", leftover);
 			return (line);
 		}
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
 	if (bytes_read == 0 && leftover && *leftover)
 	{
