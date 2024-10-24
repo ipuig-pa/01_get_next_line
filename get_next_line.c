@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:04:00 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/24 17:16:45 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:54:06 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,43 +82,29 @@ char	*get_next_line(int fd)
 	char		buffer[BUFFER_SIZE + 1];
 	size_t		bytes_read;
 	static char	*leftover;
-	size_t		line_len;
 	char		*line;
 
+	line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (leftover = free_leftover(leftover));
 	if (leftover && ft_strchr(leftover, '\n'))
 	{
-		line_len = newline_len(leftover);
-		line = line_from_leftover(leftover, line_len);
-		leftover = new_leftover(leftover, line_len, ft_strlen(leftover));
+		line = line_from_leftover(leftover, newline_len(leftover));
+		leftover = new_leftover(leftover, newline_len(leftover), ft_strlen(leftover));
 		return (line);
 	}
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
-	while (bytes_read > 0)
+	if (bytes_read > 0)
 	{
 		buffer[bytes_read] = '\0';
 		leftover = add_chunk(leftover, buffer, bytes_read);
-		if (!leftover)
-			return (NULL);
-		line_len = newline_len(leftover);
-		if (line_len < ft_strlen(leftover))
-		{
-			line = line_from_leftover(leftover, line_len);
-			leftover = new_leftover(leftover, line_len, ft_strlen(leftover));
-			return (line);
-		}
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		return (get_next_line(fd));
 	}
 	if (bytes_read == 0 && leftover && *leftover)
-	{
 		line = line_from_leftover(leftover, ft_strlen(leftover));
-		leftover = free_leftover(leftover);
-		return (line);
-	}
 	if (leftover)
 		leftover = free_leftover(leftover);
-	return (leftover);
+	return (line);
 }
 
 /*#include <fcntl.h>
