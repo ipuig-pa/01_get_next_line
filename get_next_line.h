@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:05:54 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/28 12:41:08 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/28 16:47:47 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		ft_strchr(const char *s, int c);
 
 char	*get_next_line(int fd);
 char	*line_from_leftover(char *leftover, size_t line_len, size_t add);
-char	*new_leftover(char *leftover, size_t line_len, size_t leftover_len);
+char	*new_left(char *lftvr, size_t line_len, size_t lftvr_len, char *line);
 char	*add_chunk(char *leftover, char *buffer, size_t bytes_read);
 char	*free_leftover(char *leftover);
 #endif

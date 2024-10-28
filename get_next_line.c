@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:04:00 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/28 13:25:02 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/28 16:50:31 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*get_next_line(int fd)
 	if (leftover && ft_strchr(leftover, '\n'))
 	{
 		line = line_from_leftover(leftover, newline(leftover), 2);
-		leftover = new_leftover(leftover, newline(leftover), len(leftover));
+		leftover = new_left(leftover, newline(leftover), len(leftover), line);
 		return (line);
 	}
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
@@ -44,11 +44,7 @@ char	*get_next_line(int fd)
 char	*line_from_leftover(char *leftover, size_t line_len, size_t add)
 {
 	char	*line;
-	size_t	leftover_len;
 
-	leftover_len = len(leftover);
-	if (!leftover)
-		return (NULL);
 	line = (char *)malloc(line_len + add);
 	if (!line)
 		return (NULL);
@@ -56,23 +52,25 @@ char	*line_from_leftover(char *leftover, size_t line_len, size_t add)
 	return (line);
 }
 
-char	*new_leftover(char *leftover, size_t line_len, size_t leftover_len)
+char	*new_left(char *lftvr, size_t line_len, size_t lftvr_len, char *line)
 {
 	char	*temp;
 
-	if (line_len >= leftover_len - 1)
+	if (!line)
+		return (free_leftover(lftvr));
+	if (line_len >= lftvr_len - 1)
 	{
-		free(leftover);
+		free(lftvr);
 		return (NULL);
 	}
-	temp = (char *)malloc(leftover_len - line_len + 1);
+	temp = (char *)malloc(lftvr_len - line_len);
 	if (!temp)
 	{
-		free(leftover);
+		free(lftvr);
 		return (NULL);
 	}
-	ft_strlcpy(temp, (leftover + line_len + 1), (leftover_len - line_len));
-	free(leftover);
+	ft_strlcpy(temp, (lftvr + line_len + 1), (lftvr_len - line_len));
+	free(lftvr);
 	return (temp);
 }
 
