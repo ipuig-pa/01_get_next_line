@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:04:00 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/25 11:20:43 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/28 13:25:02 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*get_next_line(int fd)
 		return (leftover = free_leftover(leftover));
 	if (leftover && ft_strchr(leftover, '\n'))
 	{
-		line = line_from_leftover(leftover, newline(leftover));
+		line = line_from_leftover(leftover, newline(leftover), 2);
 		leftover = new_leftover(leftover, newline(leftover), len(leftover));
 		return (line);
 	}
@@ -36,12 +36,12 @@ char	*get_next_line(int fd)
 		return (get_next_line(fd));
 	}
 	if (bytes_read == 0 && leftover && *leftover)
-		line = line_from_leftover(leftover, len(leftover));
+		line = line_from_leftover(leftover, len(leftover), 1);
 	leftover = free_leftover(leftover);
 	return (line);
 }
 
-char	*line_from_leftover(char *leftover, size_t line_len)
+char	*line_from_leftover(char *leftover, size_t line_len, size_t add)
 {
 	char	*line;
 	size_t	leftover_len;
@@ -49,13 +49,10 @@ char	*line_from_leftover(char *leftover, size_t line_len)
 	leftover_len = len(leftover);
 	if (!leftover)
 		return (NULL);
-	line = (char *)malloc(line_len + 2);
+	line = (char *)malloc(line_len + add);
 	if (!line)
-	{
-		free(leftover);
 		return (NULL);
-	}
-	ft_strlcpy(line, leftover, line_len + 2);
+	ft_strlcpy(line, leftover, line_len + add);
 	return (line);
 }
 
@@ -63,7 +60,7 @@ char	*new_leftover(char *leftover, size_t line_len, size_t leftover_len)
 {
 	char	*temp;
 
-	if (line_len >= leftover_len)
+	if (line_len >= leftover_len - 1)
 	{
 		free(leftover);
 		return (NULL);
@@ -87,7 +84,10 @@ char	*add_chunk(char *leftover, char *buffer, size_t bytes_read)
 	leftover_len = len(leftover);
 	temp = (char *)malloc(bytes_read + leftover_len + 1);
 	if (!temp)
+	{
+		free(leftover);
 		return (NULL);
+	}
 	if (leftover)
 	{
 		ft_strlcpy(temp, leftover, leftover_len + 1);
@@ -102,8 +102,11 @@ char	*add_chunk(char *leftover, char *buffer, size_t bytes_read)
 char	*free_leftover(char *leftover)
 {
 	if (leftover)
+	{
 		free(leftover);
-	return (NULL);
+		leftover = NULL;
+	}
+	return (leftover);
 }
 
 /*#include <fcntl.h>
